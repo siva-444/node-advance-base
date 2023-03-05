@@ -1,0 +1,34 @@
+{
+  "emmet.triggerExpansionOnTab": true,
+  "files.exclude": {
+    "**/*.js.map": {
+      "when": "$(basename)"
+    },
+    "**/node_modules": true
+  },
+  "html.autoClosingTags": true,
+  "javascript.autoClosingTags": true,
+  "javascript.suggest.completeFunctionCalls": true,
+  "typescript.suggest.completeFunctionCalls": true,
+  "javascript.suggest.autoImports": true,
+  "search.exclude": {
+    "**/coverage": true,
+    "**/node_modules": true
+  },
+  "typescript.autoClosingTags": true,
+  "typescript.suggest.autoImports": true,
+  "eslint.probe": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true,
+  },
+  "cSpell.words": [
+    "middlewares",
+    "OWASP"
+  ]
+}

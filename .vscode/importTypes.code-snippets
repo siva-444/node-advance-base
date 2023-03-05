@@ -1,0 +1,8 @@
+{
+  "import type {} from '@types'": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "impt",
+    "body": ["import type {$1} from '@app-types';"],
+    "description": "import the types from @app-types path alias"
+  }
+}

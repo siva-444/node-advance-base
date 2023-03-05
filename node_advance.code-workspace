@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"javascript.format.enable": false,
+		"javascript.validate.enable": true,
+		"typescript.suggest.paths": true,
+		"javascript.suggest.paths": false,
+		// "editor.formatOnSave": true,
+		// "eslint.format.enable": true,
+		"cSpell.words": [
+			""
+		],
+		"typescript.tsdk": "node_modules/typescript/lib"
+	}
+}

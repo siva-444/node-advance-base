@@ -1,0 +1,98 @@
+{
+  "extends": "@tsconfig/node-lts-strictest/tsconfig.json",
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "outDir": "./dist",
+    "pretty": true,
+    "removeComments": true,
+    "resolveJsonModule": true,
+    "sourceMap": true,
+    "strictNullChecks": true,
+    "typeRoots": [
+      "./src/types",
+      "./node_modules/@types"
+    ],
+    "paths": {
+      "@api": [
+        "./src/api/index"
+      ],
+      "@api-route/*": [
+        "./src/api/routes/*"
+      ],
+      "@api-routes": [
+        "./src/api/routes/index"
+      ],
+      "@api-middleware/*": [
+        "./src/api/middlewares/*"
+      ],
+      "@api-middlewares": [
+        "./src/api/middlewares/index"
+      ],
+      "@config/*": [
+        "./src/config/*"
+      ],
+      "@controller/*": [
+        "./src/controllers/*"
+      ],
+      "@controllers": [
+        "./src/controllers/index"
+      ],
+      "@event/*": [
+        "./src/events/*"
+      ],
+      "@events": [
+        "./src/events/index"
+      ],
+      "@helper/*": [
+        "./src/helpers/*"
+      ],
+      "@helpers": [
+        "./src/helpers/index"
+      ],
+      "@loader/*": [
+        "./src/loaders/*"
+      ],
+      "@loaders": [
+        "./src/loaders/index"
+      ],
+      "@model/*": [
+        "./src/models/*"
+      ],
+      "@models": [
+        "./src/models/index"
+      ],
+      "@service/*": [
+        "./src/services/*"
+      ],
+      "@services": [
+        "./src/services/index"
+      ],
+      "@app-type/*": [
+        "./src/types/*"
+      ],
+      "@app-types": [
+        "./src/types/index"
+      ],
+      "@web-middlewares": [
+        "./src/web/middlewares/index"
+      ],
+      "@web-route/*": [
+        "./src/web/routes/*"
+      ],
+      "@web-routes": [
+        "./src/web/routes/index"
+      ],
+      "@web": [
+        "./src/web/index"
+      ],
+    },
+  },
+  "ts-node": {
+    "require": [
+      "tsconfig-paths/register"
+    ],
+  }
+}

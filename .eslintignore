@@ -1,0 +1,10 @@
+.vscode/
+node_modules/
+dist/
+
+*.svg
+*.test.tsx
+.eslintrc.json
+package.json
+package-lock.json
+.lintstagedrc.json
