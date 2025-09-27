@@ -1,6 +1,6 @@
 import multer, { diskStorage } from 'multer';
 
-import { logger } from '@helper/index';
+import { logger } from '@helpers';
 
 /**
  * @TODO: Common Middleware for all File Upload Functions

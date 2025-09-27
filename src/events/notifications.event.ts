@@ -1,4 +1,4 @@
-import logger from '@helper/logger';
+import { logger } from '@helpers';
 
 import type { Socket } from 'socket.io';
 

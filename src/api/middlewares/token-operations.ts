@@ -1,7 +1,7 @@
 import { expressjwt } from 'express-jwt';
 import jwtPermission from 'express-jwt-permissions';
 
-import CONFIG from '@config/index';
+import CONFIG from '@config/index.js';
 
 import type { ExpRequest } from '@app-types';
 
@@ -13,8 +13,10 @@ import type { ExpRequest } from '@app-types';
  */
 const getTokenFromHeader = (request: ExpRequest) => {
   if (
-    (request.headers.authorization && request.headers.authorization.split(' ')[0] === 'Token') ||
-    (request.headers.authorization && request.headers.authorization.split(' ')[0] === 'Bearer')
+    (request.headers.authorization &&
+      request.headers.authorization.split(' ')[0] === 'Token') ||
+    (request.headers.authorization &&
+      request.headers.authorization.split(' ')[0] === 'Bearer')
   ) {
     return request.headers.authorization.split(' ')[1];
   }

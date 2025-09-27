@@ -1,4 +1,4 @@
-import logger from '@helper/logger';
+import { logger } from '@helpers';
 
 import type { NextFunction, Request, Response } from 'express';
 /**
@@ -7,7 +7,11 @@ import type { NextFunction, Request, Response } from 'express';
  * @param {Response} res  Express res Object
  * @param {NextFunction} next  Express next Function
  */
-const attachCurrentUser = (request: Request, _: Response, next: NextFunction) => {
+const attachCurrentUser = (
+  request: Request,
+  _: Response,
+  next: NextFunction,
+) => {
   try {
     const { user_id } = request.tokenPayload;
 

@@ -1,1 +1,1 @@
-export * as authService from './auth.service';
+export * as authService from './auth.service.js';

@@ -1,7 +1,7 @@
-import { compareSync } from 'bcryptjs';
-import { sign } from 'jsonwebtoken';
+import { verify } from 'argon2';
+import * as jwt from 'jsonwebtoken';
 
-import CONFIG from '@config/index';
+import CONFIG from '@config/index.js';
 import { CONSTANTS, ErrorClasses, logger } from '@helpers';
 import { UserModel } from '@models';
 
@@ -10,17 +10,20 @@ import type { SignOptions } from 'jsonwebtoken';
 
 const { MODULES } = CONSTANTS.PERMISSIONS;
 
-const generateToken = (user_payload: Partial<TokenPayload>, options?: SignOptions) => {
+const generateToken = (
+  user_payload: Partial<TokenPayload>,
+  options?: SignOptions,
+) => {
   const jwtPayload: Partial<TokenPayload> = {
     ...user_payload,
   };
   logger.silly(`Signing JWT token for user: %o`, jwtPayload);
-  return sign(jwtPayload, CONFIG.JWT.SECRET, options);
+  return jwt.sign(jwtPayload, CONFIG.JWT.SECRET, options);
 };
 
 export const generateAccessToken = (
   user_payload: Parameters<typeof generateToken>[0],
-  expire_time: number = CONFIG.JWT.ACCESS_TOKEN_EXPIRE_IN_MS
+  expire_time: number = CONFIG.JWT.ACCESS_TOKEN_EXPIRE_IN_MS,
 ) => {
   return generateToken(user_payload, {
     expiresIn: expire_time / 1000,
@@ -28,7 +31,7 @@ export const generateAccessToken = (
 };
 export const generateRefreshToken = (
   user_payload: Parameters<typeof generateToken>[0],
-  expire_time: number = CONFIG.JWT.ACCESS_TOKEN_EXPIRE_IN_MS
+  expire_time: number = CONFIG.JWT.ACCESS_TOKEN_EXPIRE_IN_MS,
 ) => {
   user_payload.permissions = [MODULES.TOKEN_REFRESH];
   return generateToken(user_payload, {
@@ -38,7 +41,7 @@ export const generateRefreshToken = (
 
 export const login = async (
   username: string,
-  password: string
+  password: string,
 ): Promise<{
   user: { id: number };
   access_token: string;
@@ -51,15 +54,22 @@ export const login = async (
 
   logger.silly('Checking the constraints of user login');
   if (user === null)
-    throw new ErrorClasses.ValidationError({ username: 'Could not find the account' });
+    throw new ErrorClasses.ValidationError({
+      username: 'Could not find the account',
+    });
   else if (user.status === 0)
-    throw new ErrorClasses.ValidationError({ username: 'Account was disabled' });
+    throw new ErrorClasses.ValidationError({
+      username: 'Account was disabled',
+    });
   else if (user.status === 2)
-    throw new ErrorClasses.ValidationError({ username: 'Account not yet activated' });
+    throw new ErrorClasses.ValidationError({
+      username: 'Account not yet activated',
+    });
 
   logger.silly('Checking password with user password hash');
-  const isValidPassword = compareSync(password, user.password);
-  if (!isValidPassword) throw new ErrorClasses.ValidationError({ password: 'Invalid password' });
+  const isValidPassword = await verify(user.password, password);
+  if (!isValidPassword)
+    throw new ErrorClasses.ValidationError({ password: 'Invalid password' });
   logger.info('Password is valid');
 
   // Create a user Session
@@ -71,11 +81,11 @@ export const login = async (
 
   const access_token = generateAccessToken(
     user_detailed_jwt_payload,
-    CONFIG.JWT.ACCESS_TOKEN_EXPIRE_IN_MS
+    CONFIG.JWT.ACCESS_TOKEN_EXPIRE_IN_MS,
   );
   const refresh_token = generateRefreshToken(
     user_detailed_jwt_payload,
-    CONFIG.JWT.REFRESH_TOKEN_EXPIRE_IN_MS
+    CONFIG.JWT.REFRESH_TOKEN_EXPIRE_IN_MS,
   );
 
   return { user: user, access_token, refresh_token };
@@ -88,11 +98,11 @@ export const refreshUserToken = (user_id: TokenPayload['user_id']) => {
   };
   const access_token = generateAccessToken(
     user_detailed_jwt_payload,
-    CONFIG.JWT.ACCESS_TOKEN_EXPIRE_IN_MS
+    CONFIG.JWT.ACCESS_TOKEN_EXPIRE_IN_MS,
   );
   const refresh_token = generateRefreshToken(
     user_detailed_jwt_payload,
-    CONFIG.JWT.REFRESH_TOKEN_EXPIRE_IN_MS
+    CONFIG.JWT.REFRESH_TOKEN_EXPIRE_IN_MS,
   );
   return { access_token, refresh_token };
 };

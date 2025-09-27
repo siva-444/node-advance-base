@@ -7,4 +7,4 @@ imageRoutes.get('/:fileName', (request, response) => {
   response.send(`uploads/${params.fileName}`);
 });
 
-export default imageRoutes;
+export { imageRoutes };

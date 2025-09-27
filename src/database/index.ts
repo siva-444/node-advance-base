@@ -1,11 +1,18 @@
 // import mysql from 'mysql';
-import mysql2 from 'mysql2';
+import { createPool } from 'mysql2';
 
-import CONFIG from '@config/index';
+import CONFIG from '@config/index.js';
 
 import type { PoolOptions } from 'mysql2';
 
-const { DB_HOST, DB_PORT, DB_DATABASE, DB_USER, DB_PASSWORD, DB_CONNECTION_LIMIT } = CONFIG;
+const {
+  DB_HOST,
+  DB_PORT,
+  DB_DATABASE,
+  DB_USER,
+  DB_PASSWORD,
+  DB_CONNECTION_LIMIT,
+} = CONFIG;
 const DB_CONFIG: PoolOptions = {
   host: DB_HOST,
   port: DB_PORT,
@@ -16,9 +23,12 @@ const DB_CONFIG: PoolOptions = {
   connectionLimit: DB_CONNECTION_LIMIT,
 };
 
-export const pool = mysql2.createPool(DB_CONFIG);
+export const pool = createPool(DB_CONFIG);
 // export const sql_promise: Pool = pool.promise();
 
 // Multiple Query Pool
-export const multiple_pool = mysql2.createPool({ ...DB_CONFIG, multipleStatements: true });
+export const multiple_pool = createPool({
+  ...DB_CONFIG,
+  multipleStatements: true,
+});
 // export const sql_multiple_promise = multiple_pool.promise();

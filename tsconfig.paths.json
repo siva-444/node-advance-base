@@ -1,0 +1,79 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@api": [
+        "./src/api/index.ts"
+      ],
+      "@api-route/*": [
+        "./src/api/routes/*"
+      ],
+      "@api-routes": [
+        "./src/api/routes/index.ts"
+      ],
+      "@api-middleware/*": [
+        "./src/api/middlewares/*"
+      ],
+      "@api-middlewares": [
+        "./src/api/middlewares/index.ts"
+      ],
+      "@config/*": [
+        "./src/config/*"
+      ],
+      "@controller/*": [
+        "./src/controllers/*"
+      ],
+      "@controllers": [
+        "./src/controllers/index.ts"
+      ],
+      "@event/*": [
+        "./src/events/*"
+      ],
+      "@events": [
+        "./src/events/index.ts"
+      ],
+      "@helper/*": [
+        "./src/helpers/*"
+      ],
+      "@helpers": [
+        "./src/helpers/index.ts"
+      ],
+      "@loader/*": [
+        "./src/loaders/*"
+      ],
+      "@loaders": [
+        "./src/loaders/index.ts"
+      ],
+      "@model/*": [
+        "./src/models/*"
+      ],
+      "@models": [
+        "./src/models/index.ts"
+      ],
+      "@service/*": [
+        "./src/services/*"
+      ],
+      "@services": [
+        "./src/services/index.ts"
+      ],
+      "@app-type/*": [
+        "./src/types/*"
+      ],
+      "@app-types": [
+        "./src/types/index.ts"
+      ],
+      "@web-middlewares": [
+        "./src/web/middlewares/index.ts"
+      ],
+      "@web-route/*": [
+        "./src/web/routes/*"
+      ],
+      "@web-routes": [
+        "./src/web/routes/index.ts"
+      ],
+      "@web": [
+        "./src/web/index.ts"
+      ],
+    },
+  }
+}

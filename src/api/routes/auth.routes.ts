@@ -15,7 +15,7 @@ authRoutes.get(
   '/token/refresh',
   // extractTokenPayload,
   guardTokenRefresh,
-  authController.refreshUserToken
+  authController.refreshUserToken,
 );
 
-export default authRoutes;
+export { authRoutes };

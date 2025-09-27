@@ -1,15 +1,20 @@
 import { Sequelize } from 'sequelize';
 
-import CONFIG from '@config/index';
+import CONFIG from '@config/index.js';
 
-import User from './user.model';
+import User from './user.model.js';
 
 // Open database connection
-const sequelize = new Sequelize(CONFIG.DB_DATABASE, CONFIG.DB_USER, CONFIG.DB_PASSWORD, {
-  host: CONFIG.DB_HOST,
-  port: Number.parseInt(CONFIG.DB_USER),
-  dialect: 'mysql',
-});
+const sequelize = new Sequelize(
+  CONFIG.DB_DATABASE,
+  CONFIG.DB_USER,
+  CONFIG.DB_PASSWORD,
+  {
+    host: CONFIG.DB_HOST,
+    port: Number.parseInt(CONFIG.DB_USER),
+    dialect: 'mysql',
+  },
+);
 
 // Initialize each model in the database
 // This must be done before associations are made
@@ -18,4 +23,4 @@ for (const model of models) model.initialize(sequelize);
 
 export { sequelize as Database };
 
-export { default as UserModel } from './user.model';
+export { default as UserModel } from './user.model.js';

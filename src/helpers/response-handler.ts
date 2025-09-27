@@ -1,24 +1,35 @@
-import { STATUS_CODES } from '@helper/constants';
+import { STATUS_CODES } from '@helper/constants.js';
 
 import type { StatusCodesValues } from '@app-types';
 import type { Response as ExpResponse, NextFunction, Request } from 'express';
+
 const getMessage = (messageCode: string) => {
   return messageCode;
 };
-type ResponseDataType = {
+
+export type ResponseDataType = {
   records?: Record<string, unknown> | Record<string, unknown>[] | null;
 } & Record<string, unknown>;
-const responseHandler = (_: Request, response: ExpResponse, next: NextFunction) => {
+
+const responseHandler = (
+  _: Request,
+  response: ExpResponse,
+  next: NextFunction,
+) => {
   response.respond = (
     messageCode: string | null = null,
     data = null,
-    status: StatusCodesValues = STATUS_CODES.OK
+    status: StatusCodesValues = STATUS_CODES.OK,
   ) => {
-    const responseBody: { message?: string; data?: Record<string, unknown> | null } = {};
+    const responseBody: {
+      message?: string;
+      data?: Record<string, unknown> | null;
+    } = {};
     if (messageCode !== null) responseBody.message = getMessage(messageCode);
     if (data !== null) responseBody.data = data;
 
-    if (responseBody.message || responseBody.data) response.status(status).json(responseBody).end();
+    if (responseBody.message || responseBody.data)
+      response.status(status).json(responseBody).end();
     else response.status(status).end();
   };
 
@@ -31,7 +42,11 @@ const responseHandler = (_: Request, response: ExpResponse, next: NextFunction) 
    *
    */
 
-  response.sendSuccessResponse = (messageCode = 'success', records = null, appendData = null) => {
+  response.sendSuccessResponse = (
+    messageCode = 'success',
+    records = null,
+    appendData = null,
+  ) => {
     let responseData: ResponseDataType | null = appendData ?? {};
     if (records !== null) responseData.records = records;
     else if (appendData === null) responseData = null;
@@ -50,10 +65,10 @@ const responseHandler = (_: Request, response: ExpResponse, next: NextFunction) 
     messageCode = 'success',
     records,
     meta,
-    appendData = null
+    appendData = null,
   ) => {
     const responseData: ResponseDataType | null = appendData ?? {};
-    responseData['meta'] = meta;
+    responseData.meta = meta;
 
     if (records !== null) responseData.records = records;
     response.respond(messageCode, responseData);
@@ -63,7 +78,9 @@ const responseHandler = (_: Request, response: ExpResponse, next: NextFunction) 
    * Send this response when requested api have a empty records like in pagination
    *
    */
-  response.sendNoContentResponse = (messageCode = String(STATUS_CODES.NO_CONTENT)) => {
+  response.sendNoContentResponse = (
+    messageCode = String(STATUS_CODES.NO_CONTENT),
+  ) => {
     response.respond(messageCode, null, STATUS_CODES.NO_CONTENT);
   };
 
@@ -74,7 +91,7 @@ const responseHandler = (_: Request, response: ExpResponse, next: NextFunction) 
    */
   response.sendUnknownFieldResponse = (
     messageCode = String(STATUS_CODES.BAD_REQUEST),
-    unknown_fields = null
+    unknown_fields = null,
   ) => {
     response.respond(messageCode, { unknown_fields }, STATUS_CODES.BAD_REQUEST);
   };
@@ -87,9 +104,13 @@ const responseHandler = (_: Request, response: ExpResponse, next: NextFunction) 
    */
   response.sendBadHeaderResponse = (
     messageCode = String(STATUS_CODES.BAD_REQUEST),
-    missedHeaders = null
+    missedHeaders = null,
   ) => {
-    response.respond(messageCode, { headers: missedHeaders }, STATUS_CODES.FORBIDDEN);
+    response.respond(
+      messageCode,
+      { headers: missedHeaders },
+      STATUS_CODES.FORBIDDEN,
+    );
   };
 
   /**
@@ -97,7 +118,9 @@ const responseHandler = (_: Request, response: ExpResponse, next: NextFunction) 
    *
    * @param string|null messageCode
    */
-  response.sendUnauthorizeResponse = (messageCode = String(STATUS_CODES.UNAUTHORIZED)) => {
+  response.sendUnauthorizeResponse = (
+    messageCode = String(STATUS_CODES.UNAUTHORIZED),
+  ) => {
     response.respond(messageCode, null, STATUS_CODES.UNAUTHORIZED);
   };
 
@@ -107,7 +130,9 @@ const responseHandler = (_: Request, response: ExpResponse, next: NextFunction) 
    *
    * @param string|null messageCode
    */
-  response.sendForbiddenResponse = (messageCode = String(STATUS_CODES.FORBIDDEN)) => {
+  response.sendForbiddenResponse = (
+    messageCode = String(STATUS_CODES.FORBIDDEN),
+  ) => {
     response.respond(messageCode, null, STATUS_CODES.FORBIDDEN);
   };
 
@@ -116,7 +141,9 @@ const responseHandler = (_: Request, response: ExpResponse, next: NextFunction) 
    *
    * @param string|null messageCode
    */
-  response.sendNotFoundResponse = (messageCode = String(STATUS_CODES.NOT_FOUND)) => {
+  response.sendNotFoundResponse = (
+    messageCode = String(STATUS_CODES.NOT_FOUND),
+  ) => {
     response.respond(messageCode, null, STATUS_CODES.NOT_FOUND);
   };
 
@@ -128,9 +155,13 @@ const responseHandler = (_: Request, response: ExpResponse, next: NextFunction) 
    */
   response.sendValidationFailureResponse = (
     messageCode = String(STATUS_CODES.UNPROCESSABLE_ENTITY),
-    errors = null
+    errors = null,
   ) => {
-    response.respond(messageCode, { errors }, STATUS_CODES.UNPROCESSABLE_ENTITY);
+    response.respond(
+      messageCode,
+      { errors },
+      STATUS_CODES.UNPROCESSABLE_ENTITY,
+    );
   };
 
   /**
@@ -138,7 +169,9 @@ const responseHandler = (_: Request, response: ExpResponse, next: NextFunction) 
    *
    * @param {string|null} messageCode
    */
-  response.sendRateLimitExceedResponse = (messageCode = String(STATUS_CODES.TOO_MANY_REQUESTS)) => {
+  response.sendRateLimitExceedResponse = (
+    messageCode = String(STATUS_CODES.TOO_MANY_REQUESTS),
+  ) => {
     response.respond(messageCode, null, STATUS_CODES.TOO_MANY_REQUESTS);
   };
 
@@ -149,9 +182,13 @@ const responseHandler = (_: Request, response: ExpResponse, next: NextFunction) 
    */
   response.sendExpectationFailed = (
     messageCode = String(STATUS_CODES.EXPECTATION_FAILED),
-    exception
+    exception,
   ) => {
-    response.respond(messageCode, { exception }, STATUS_CODES.EXPECTATION_FAILED);
+    response.respond(
+      messageCode,
+      { exception },
+      STATUS_CODES.EXPECTATION_FAILED,
+    );
   };
 
   /**
@@ -161,9 +198,13 @@ const responseHandler = (_: Request, response: ExpResponse, next: NextFunction) 
    */
   response.sendServerErrorResponse = (
     messageCode = String(STATUS_CODES.INTERNAL_SERVER_ERROR),
-    exception
+    exception,
   ) => {
-    response.respond(messageCode, { exception }, STATUS_CODES.INTERNAL_SERVER_ERROR);
+    response.respond(
+      messageCode,
+      { exception },
+      STATUS_CODES.INTERNAL_SERVER_ERROR,
+    );
   };
 
   next();

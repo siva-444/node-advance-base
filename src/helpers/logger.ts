@@ -1,15 +1,20 @@
-import { createLogger, format, transports, config as winstonConfig } from 'winston';
+import {
+  createLogger,
+  format,
+  transports,
+  config as winstonConfig,
+} from 'winston';
 
-import CONFIG from '@config/index';
+import CONFIG from '@config/index.js';
 
 const appTransports = [];
-if (process.env['NODE_ENV'] !== 'development') {
+if (process.env.NODE_ENV !== 'development') {
   appTransports.push(new transports.Console());
 } else {
   appTransports.push(
     new transports.Console({
       format: format.combine(format.cli(), format.splat()),
-    })
+    }),
   );
 }
 
@@ -22,7 +27,7 @@ const LoggerInstance = createLogger({
     }),
     format.errors({ stack: true }),
     format.splat(),
-    format.json()
+    format.json(),
   ),
   transports: appTransports,
 });

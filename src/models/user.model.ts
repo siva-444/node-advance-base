@@ -1,4 +1,6 @@
-import { DataTypes, Model, Sequelize } from 'sequelize';
+import { DataTypes, Model } from 'sequelize';
+
+import type { Sequelize } from 'sequelize';
 
 class User extends Model {
   public first!: string;
@@ -18,7 +20,7 @@ class User extends Model {
         first: DataTypes.STRING,
         last: DataTypes.STRING,
       },
-      { sequelize: sequelize }
+      { sequelize: sequelize },
     );
   }
 }

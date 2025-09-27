@@ -1,1 +1,1 @@
-export { default as imageRoutes } from './image';
+export * from './image.js';

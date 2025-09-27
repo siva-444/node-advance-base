@@ -5,12 +5,6 @@
 		}
 	],
 	"settings": {
-		"javascript.format.enable": false,
-		"javascript.validate.enable": true,
-		"typescript.suggest.paths": true,
-		"javascript.suggest.paths": false,
-		// "editor.formatOnSave": true,
-		// "eslint.format.enable": true,
 		"cSpell.words": [
 			""
 		],

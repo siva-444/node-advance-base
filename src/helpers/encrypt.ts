@@ -1,6 +1,6 @@
 import crypto from 'node:crypto';
 
-import CONFIG from '@config/index';
+import CONFIG from '@config/index.js';
 
 const algorithm = 'aes-256-cbc';
 
@@ -8,7 +8,7 @@ const encrypt = (text: string) => {
   const cipher = crypto.createCipheriv(
     algorithm,
     Buffer.from(CONFIG.AES.KEY, 'hex'),
-    Buffer.from(CONFIG.AES.IV, 'hex')
+    Buffer.from(CONFIG.AES.IV, 'hex'),
   );
   let encrypted = cipher.update(text);
   encrypted = Buffer.concat([encrypted, cipher.final()]);
@@ -19,7 +19,7 @@ export const decrypt = (text: string) => {
   const decipher = crypto.createDecipheriv(
     algorithm,
     Buffer.from(CONFIG.AES.KEY, 'hex'),
-    Buffer.from(CONFIG.AES.IV, 'hex')
+    Buffer.from(CONFIG.AES.IV, 'hex'),
   );
   let decrypted = decipher.update(text, 'hex', 'utf8');
   decrypted += decipher.final('utf8');

@@ -1,2 +1,2 @@
-export * as ErrorClasses from './classes';
-export * from './handler';
+export * as ErrorClasses from './classes.js';
+export * from './handler.js';

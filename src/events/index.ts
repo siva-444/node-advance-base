@@ -1,1 +1,1 @@
-export { default as notificationEventHandlers } from './notifications.event';
+export { default as notificationEventHandlers } from './notifications.event.js';

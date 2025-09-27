@@ -4,9 +4,10 @@ import express from 'express';
 import ms from 'ms';
 import { Server } from 'socket.io';
 
-import CONFIG from './config';
-import logger from './helpers/logger';
-import loader from './loaders/index';
+import CONFIG from '@config/index.js';
+import { logger } from '@helper/index.js';
+import loader from '@loader/index.js';
+
 function startServer() {
   const app = express();
   const httpServer = createServer(app);

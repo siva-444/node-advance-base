@@ -1,15 +1,31 @@
 import compression from 'compression';
 import cors from 'cors';
 import { json, urlencoded } from 'express';
+import { rateLimit } from 'express-rate-limit';
 import helmet from 'helmet';
 
 import apiRoutes from '@api';
-import { ErrorClasses, requestErrorHandler, responseHandler } from '@helpers';
+import {
+  ErrorClasses,
+  requestErrorHandler,
+  responseHandler,
+} from '@helper/index.js';
 import webRoutes from '@web';
 
 import type { Application } from 'express';
 
-const ACCEPTED_CONTENT_TYPES_WHITELIST = new Set(['', 'application/json', 'multipart/form-data']);
+const ACCEPTED_CONTENT_TYPES_WHITELIST = new Set([
+  '',
+  'application/json',
+  'multipart/form-data',
+]);
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  limit: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+});
 
 export default ({ app }: { app: Application }) => {
   /**
@@ -20,26 +36,31 @@ export default ({ app }: { app: Application }) => {
   //Add extra care
   app.use(cors());
   app.use(compression());
+  app.use(limiter);
   app.use(
     helmet({
       hidePoweredBy: true,
-    })
+    }),
   );
 
   /** Register Global response handlers */
   app.use(responseHandler);
 
   /** Extending request body size */
-  app.use('/api/*', json({ limit: '65mb' }));
-  app.use('/api/*', urlencoded({ limit: '65mb', extended: true }));
+  app.use('/api', json({ limit: '65mb' }));
+  app.use('/api', urlencoded({ limit: '65mb', extended: true }));
 
   /** Middleware for to make sure allowed content-type only we have process as per OWASP */
-  app.use('/api/*', (request, response, next) => {
-    const requestContentType = String(request.get('Content-Type') ?? '').toLowerCase();
+  app.use('/api', (request, response, next) => {
+    const requestContentType = String(
+      request.get('Content-Type') ?? '',
+    ).toLowerCase();
     if (ACCEPTED_CONTENT_TYPES_WHITELIST.has(requestContentType)) {
       return next();
     }
-    return response.status(400).json({ status: 'FAILED', message: 'Invalid Headers' });
+    return response
+      .status(400)
+      .json({ status: 'FAILED', message: 'Invalid Headers' });
   });
 
   /** API Documentation
