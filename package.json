@@ -13,7 +13,12 @@
     "serve": "node --env-file=.env dist/index.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "db:init": "node db/migrations/start.js init",
+    "db:seed": "node db/migrations/start.js seed",
+    "db:cleanup": "node db/migrations/start.js cleanup",
+    "db:reset": "node db/migrations/start.js reset",
+    "db:all": "node db/migrations/start.js all"
   },
   "repository": {
     "type": "git",

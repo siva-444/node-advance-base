@@ -1,64 +1,215 @@
-# Project Title
+# Node Advanced Base
 
-A nice project with a nice description
+A modern Node.js TypeScript REST API boilerplate with Express.js, featuring authentication, database migrations, Socket.IO integration, and comprehensive tooling.
 
----
+## 🚀 Features
 
-## Requirements
+- **TypeScript**: Full TypeScript support with modern ES modules
+- **Express.js**: Fast, unopinionated web framework
+- **Authentication**: JWT-based authentication with Argon2 password hashing
+- **Database**: Sequelize ORM with MySQL2 support
+- **Real-time**: Socket.IO integration for real-time communication
+- **Security**: Helmet, CORS, rate limiting, and input validation
+- **File Upload**: Multer integration for file handling
+- **Event System**: Custom event handling system
+- **Database Migrations**: Automated database setup and seeding
+- **Logging**: Winston logger with custom formatting
+- **Linting**: ESLint with TypeScript support and Prettier
+- **Git Hooks**: Husky with commitlint and lint-staged
 
-For development, you will only need Node.js and a node global package, Yarn, installed in your environnement.
+## 📋 Requirements
 
-### Node
+- **Node.js**: >= 22.0.0
+- **MySQL**: For database (or compatible)
+- **npm** or **yarn**: Package manager
 
-- #### Node installation on Windows
+## 🛠 Installation
 
-  Just go on [official Node.js website](https://nodejs.org/) and download the installer.
-  Also, be sure to have `git` available in your PATH, `npm` might need it (You can find git [here](https://git-scm.com/)).
+1. **Clone the repository**
 
-- #### Node installation on Ubuntu
+   ```bash
+   git clone https://github.com/siva-444/node-advance-base.git
+   cd node-advance-base
+   ```
 
-  You can install nodejs and npm easily with apt install, just run the following commands.
+2. **Install dependencies**
 
-      $ sudo apt install nodejs
-      $ sudo apt install npm
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
 
-- #### Other Operating Systems
-  You can find more information about the installation on the [official Node.js website](https://nodejs.org/) and the [official NPM website](https://npmjs.org/).
+3. **Environment Configuration**
+   Create a `.env` file in the root directory:
 
-If the installation was successful, you should be able to run the following command.
+   ```env
+   # Server Configuration
+   PORT=3000
+   NODE_ENV=development
 
-    $ node --version
-    v8.11.3
+   # Database Configuration
+   DB_HOST=localhost
+   DB_PORT=3306
+   DB_NAME=your_database_name
+   DB_USER=your_database_user
+   DB_PASS=your_database_password
 
-    $ npm --version
-    6.1.0
+   # JWT Configuration
+   JWT_SECRET=your_super_secret_jwt_key
+   JWT_EXPIRES_IN=7d
 
-If you need to update `npm`, you can make it using `npm`! Cool right? After running the following command, just open again the command line and be happy.
+   # Other configurations...
+   ```
 
-    $ npm install npm -g
+## 🗂 Project Structure
 
-###
+```
+src/
+├── api/                    # API layer
+│   ├── middlewares/        # Custom middlewares
+│   └── routes/            # Route definitions
+├── config/                # Configuration files
+├── controllers/           # Route controllers
+├── database/              # Database connection setup
+├── events/                # Event handlers
+├── helpers/               # Utility functions
+│   └── error/             # Error handling
+├── loaders/               # Application loaders
+├── models/                # Database models
+├── services/              # Business logic
+├── types/                 # TypeScript type definitions
+└── web/                   # Web assets and routes
 
-### Yarn installation
+db/
+└── migrations/            # Database migration scripts
+```
 
-After installing node, this project will need yarn too, so just run the following command.
+## 🚀 Getting Started
 
-      $ npm install -g yarn
+### Development Mode
 
----
+```bash
+npm run dev
+# or
+yarn dev
+```
 
-## Install
+### Production Build
 
-    $ git clone git@github.com:siva-444/node-advance-base.git
-    $ cd node-advance-base
-    $ yarn install
+```bash
+npm run build
+npm run serve
+# or
+yarn build
+yarn serve
+```
 
-## Configure app
+## 📊 Database Operations
 
-## Running the project
+### Initialize Database
 
-    $ yarn start
+```bash
+npm run db:init
+```
 
-## Simple build for production
+### Seed Database
 
-    $ yarn build
+```bash
+npm run db:seed
+```
+
+### Reset Database
+
+```bash
+npm run db:reset
+```
+
+### Run All Database Operations
+
+```bash
+npm run db:all
+```
+
+## 🧪 Code Quality
+
+### Linting
+
+```bash
+npm run lint          # Check for linting errors
+npm run lint:fix      # Fix linting errors
+```
+
+### Git Hooks
+
+The project includes pre-commit hooks that will:
+
+- Run ESLint on staged files
+- Check commit message format
+- Ensure code quality before commits
+
+## 📡 API Endpoints
+
+### Authentication
+
+- `POST /auth/register` - User registration
+- `POST /auth/login` - User login
+- `GET /auth/profile` - Get user profile (protected)
+
+### Web Routes
+
+- `GET /` - Health check
+- `GET /image/*` - Static image serving
+
+## 🔌 Socket.IO Integration
+
+The application includes Socket.IO for real-time communication:
+
+- WebSocket server running alongside Express
+- CORS configured for development
+- Event system integration
+
+## 🛡 Security Features
+
+- **Helmet**: Security headers
+- **CORS**: Cross-origin resource sharing
+- **Rate Limiting**: API rate limiting
+- **JWT**: JSON Web Token authentication
+- **Argon2**: Password hashing
+- **Input Validation**: Request validation with Celebrate
+
+## 🔧 Configuration
+
+The application uses a centralized configuration system located in `src/config/`. Environment variables are loaded and validated at startup.
+
+## 📝 Logging
+
+Winston logger is configured with:
+
+- Console and file transports
+- Custom formatting
+- Different log levels for development/production
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📋 TODO
+
+- [ ] Analyze type DI for dependency injection
+- [ ] Use stored procedures instead of raw queries
+- [ ] Add comprehensive testing suite
+- [ ] Add API documentation (OpenAPI/Swagger)
+- [ ] Add Docker configuration
+
+## 📄 License
+
+This project is licensed under the ISC License.
+
+## 👤 Author
+
+**Siva** - [GitHub Profile](https://github.com/siva-444)
